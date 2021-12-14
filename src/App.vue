@@ -8,6 +8,7 @@
       <router-link to="/about">A propos des développeurs</router-link>
     </div>
     <router-view/>
+    <div>Maintenu par Polytech-Paris. Polylove est une marque réservée.</div>
   </div>
 </template>
 
