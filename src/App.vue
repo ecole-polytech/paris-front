@@ -13,10 +13,16 @@
         <router-link to="/about">A propos des développeurs</router-link>
       </div>
       <v-spacer></v-spacer>
-      <div>
-        <v-avatar>
-          <img src="@/assets/default_avatar.jpg">
-        </v-avatar>
+      <div class="bar-profile" :style="{left: connectionPosition}">
+        <v-btn icon @click="showConnectionBar = true">
+          <v-avatar>
+            <img src="@/assets/default_avatar.jpg">
+          </v-avatar>
+        </v-btn>
+        <v-text-field></v-text-field>
+        <v-btn icon class="color-green" @click="showConnectionBar = false">
+          <v-icon>{{connectLogoPath}}</v-icon>
+        </v-btn>
       </div>
     </v-app-bar>
 
@@ -32,12 +38,25 @@
 </template>
 
 <script>
-import { mdiHeart } from '@mdi/js';
+import { mdiHeart, mdiArrowRightBold } from '@mdi/js';
 
 export default {
   data: () => ({
-    heartLogoPath: mdiHeart
+    heartLogoPath: mdiHeart,
+    connectLogoPath: mdiArrowRightBold,
+    showConnectionBar: false,
+
+
+    userId: -1
   }),
+  computed: {
+    connectionPosition: function(){
+      if(this.showConnectionBar){
+        return '0';
+      }
+      return '270px'
+    }
+  }
 }
 </script>
 
@@ -65,5 +84,20 @@ export default {
 
 .color-red{
   color: red !important;
+}
+.color-green{
+  color: #57f357 !important;
+}
+
+.bar-profile{
+  overflow-clip: none;
+  display: flex;
+  position: relative;
+
+  transition: left ease-in-out 1s;
+}
+
+.bar-profile > * {
+  margin-right: 1em;
 }
 </style>
