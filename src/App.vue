@@ -1,16 +1,39 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Présentation</router-link> |
-      <router-link to="/ViewProfile">Je veux swiiiper</router-link> |
-      <router-link to="/Relations">Aller plus loin</router-link> |
-      <router-link to="/MyProfile">Configurer mon profile</router-link> |
-      <router-link to="/about">A propos des développeurs</router-link>
-    </div>
-    <router-view/>
-    <div>Maintenu par Polytech-Paris. Polylove est une marque réservée.</div>
+
+    <v-app-bar>
+      <v-icon aria-label="My Account" role="img" aria-hidden="false">
+        {{heartLogoPath}}
+      </v-icon>
+      <div id="nav">
+        <router-link to="/">Présentation</router-link> |
+        <router-link to="/ViewProfile">Je veux swiiiper</router-link> |
+        <router-link to="/Relations">Aller plus loin</router-link> |
+        <router-link to="/MyProfile">Configurer mon profile</router-link> |
+        <router-link to="/about">A propos des développeurs</router-link>
+      </div>
+    </v-app-bar>
+
+    <v-main>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </v-main>
+
+    <v-footer app>Maintenu par Polytech-Paris. Polylove est une marque réservée.</v-footer>
+
   </div>
 </template>
+
+<script>
+import { mdiAccount } from '@mdi/js';
+
+export default {
+  data: () => ({
+    heartLogoPath: mdiAccount
+  }),
+}
+</script>
 
 <style>
 #app {

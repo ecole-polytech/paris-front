@@ -1,8 +1,10 @@
 <template>
   <div class="home">
     <h1>Bienvenue sur le site Polylove</h1>
-    <p></p>
-    <PublicProfile/>
+    <p>Ce site vous permettra de trouver l'amour dans votre réseau d'école ! Ou d'élargir vos horizons à de nouvelles filières</p>
+    <v-container class="card-container">
+      <PublicProfile id-user:42/>
+    </v-container>
   </div>
 </template>
 
@@ -17,3 +19,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.card-container{
+  justify-content: center;
+  display: flex;
+}
+</style>

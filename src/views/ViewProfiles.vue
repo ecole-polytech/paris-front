@@ -1,5 +1,7 @@
 <template>
-Ici il faut swiiiiiiipe
+<div>
+  Ici il faut swiiiiiiipe
+</div>
 </template>
 
 <script>

@@ -1,10 +1,11 @@
 <template>
-  <div>
-    <h2>Profile de {{ userInfo.username }}</h2>
+  <v-card class="card">
+    <v-card-title>Profile de {{ userInfo.username }}</v-card-title>
     <li>
-      <ul>id : {{id}}</ul>
+      <ul>id : {{userInfo.id}}</ul>
+      <ul>age : {{userInfo.age}}</ul>
     </li>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -15,12 +16,17 @@ export default {
   },
   data: function () {
     return {
-      userInfo: {id : -1, username : 'Guillaume dit Le tombeur'}
+      userInfo: {id : -1, username : 'Guillaume dit Le tombeur', age: 10}
     }
+  },
+  beforeMount() {
+    this.userInfo.id = this.idUser;
   }
 }
 </script>
 
 <style scoped>
-
+.card{
+  max-width: 50em;
+}
 </style>
