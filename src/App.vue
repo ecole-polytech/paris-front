@@ -7,7 +7,7 @@
       </v-icon>
       <div id="nav">
         <router-link to="/">Présentation</router-link> |
-        <router-link to="/ViewProfile">Je veux swiiiper</router-link> |
+        <router-link to="/ViewProfiles">Je veux swiiiper</router-link> |
         <router-link to="/Relations">Aller plus loin</router-link> |
         <router-link to="/MyProfile">Configurer mon profile</router-link> |
         <router-link to="/about">A propos des développeurs</router-link>
