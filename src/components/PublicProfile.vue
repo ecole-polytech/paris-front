@@ -3,7 +3,7 @@
     <v-card-title>Profile de {{ userInfo.username }}</v-card-title>
     <li>
       <ul>id : {{userInfo.id}}</ul>
-      <ul>age : {{userInfo.age}}</ul>
+      <ul>description : {{ userInfo.description }}</ul>
     </li>
   </v-card>
 </template>
@@ -16,11 +16,22 @@ export default {
   },
   data: function () {
     return {
-      userInfo: {id : -1, username : 'Guillaume dit Le tombeur', age: 10}
+      userInfo: {id : -1, username : 'undefined', description: "undefined"}
     }
   },
-  beforeMount() {
-    this.userInfo.id = this.idUser;
+  mounted() {
+    //setTimeout(
+    //    () => {
+          this.userInfo.id = this.idUser;
+          console.log(this._props.idUser);
+          fetch("http://" + process.env.VUE_APP_API_URL + "/users/" + this.idUser) //TODO this is UNDEFINED
+              .then(response => response.json())
+              .then(data => {
+                this.userInfo.username = data.name;
+                this.userInfo.description = data.description;
+              });
+     //   }
+     //   , 1000);
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Modification de mon profile</h1>
+    <h1>Modification de mon profil</h1>
     <img src="" alt="image de profile">
     <label>identifiant : </label><span>{{userId}}</span>
     <label>nom :</label><span>{{userName}}</span>

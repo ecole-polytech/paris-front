@@ -2,15 +2,21 @@
   <div id="app">
 
     <v-app-bar>
-      <v-icon aria-label="My Account" role="img" aria-hidden="false">
+      <v-icon aria-label="My Account" role="img" aria-hidden="false" class="color-red">
         {{heartLogoPath}}
       </v-icon>
       <div id="nav">
         <router-link to="/">Présentation</router-link> |
         <router-link to="/ViewProfiles">Je veux swiiiper</router-link> |
         <router-link to="/Relations">Aller plus loin</router-link> |
-        <router-link to="/MyProfile">Configurer mon profile</router-link> |
+        <router-link to="/MyProfile">Configurer mon profil</router-link> |
         <router-link to="/about">A propos des développeurs</router-link>
+      </div>
+      <v-spacer></v-spacer>
+      <div>
+        <v-avatar>
+          <img src="@/assets/default_avatar.jpg">
+        </v-avatar>
       </div>
     </v-app-bar>
 
@@ -26,11 +32,11 @@
 </template>
 
 <script>
-import { mdiAccount } from '@mdi/js';
+import { mdiHeart } from '@mdi/js';
 
 export default {
   data: () => ({
-    heartLogoPath: mdiAccount
+    heartLogoPath: mdiHeart
   }),
 }
 </script>
@@ -55,5 +61,9 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.color-red{
+  color: red !important;
 }
 </style>
