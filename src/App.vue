@@ -19,7 +19,7 @@
             <img src="@/assets/default_avatar.jpg">
           </v-avatar>
         </v-btn>
-        <v-text-field></v-text-field>
+        <v-text-field v-model="userId"></v-text-field>
         <v-btn icon class="color-green" @click="connect()">
           <v-icon>{{connectLogoPath}}</v-icon>
         </v-btn>
@@ -47,7 +47,8 @@ export default {
     isConnected: false,
 
 
-    userId: -1
+    userId: "",
+    userInfo: {id : -1, username : 'non-connected', description: "non-connected"}
   }),
   computed: {
     connectionPosition: function(){
@@ -59,9 +60,31 @@ export default {
   },
   methods: {
     connect: function() {
-      this.isConnected = true;
+      if (this.userId === "GuillaumeOnPenseAToi") { //TODO add production mode
+        //Debug mode :)
+        this.userInfo = {id : -1, username : 'Debug mode', description: "Toute puissance"};
+        this.isConnected = true;
+      } else {
+        fetch("http://" + process.env.VUE_APP_API_URL + "/users/" + this.userId)
+            .then(response => {
+
+              alert("RESPONSE"); //TODO DEBUG ONLY
+              if (response.ok) {
+                response.json()
+              } else {
+                alert("Mauvais login");
+              }
+            })
+            .then(data => {
+              //TODO do we arrive here if not connected
+              this.userInfo.username = data.name;
+              this.userInfo.description = data.description;
+              this.isConnected = true;
+            });
+      }
     },
     disconnect: function() {
+      this.userInfo = {id : -1, username : 'non-connected', description: "non-connected"};
       this.isConnected = false;
     }
   }
