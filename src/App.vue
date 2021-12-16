@@ -6,11 +6,11 @@
         {{heartLogoPath}}
       </v-icon>
       <div id="nav">
-        <router-link to="/">Présentation</router-link> |
-        <router-link to="/ViewProfiles">Je veux swiiiper</router-link> |
-        <router-link to="/Relations">Aller plus loin</router-link> |
-        <router-link to="/MyProfile">Configurer mon profil</router-link> |
-        <router-link to="/about">A propos des développeurs</router-link>
+        <router-link to="/">Présentation</router-link>
+        <div v-if="this.$store.state.isConnected" style="display: inline"> | <router-link to="/ViewProfiles">Je veux swiiiper</router-link>  </div>
+        <div v-if="this.$store.state.isConnected" style="display: inline"> | <router-link to="/Relations">Aller plus loin</router-link> </div>
+        <div v-if="this.$store.state.isConnected" style="display: inline"> | <router-link to="/MyProfile">Configurer mon profil</router-link> </div>
+        | <router-link to="/about">A propos des développeurs</router-link>
       </div>
       <v-spacer></v-spacer>
       <div class="bar-profile" :style="{left: connectionPosition}">
@@ -19,7 +19,7 @@
             <img src="@/assets/default_avatar.jpg">
           </v-avatar>
         </v-btn>
-        <v-text-field v-model="userId"></v-text-field>
+        <v-text-field v-model="userIdFromField"></v-text-field>
         <v-btn icon class="color-green" @click="connect()">
           <v-icon>{{connectLogoPath}}</v-icon>
         </v-btn>
@@ -39,20 +39,34 @@
 
 <script>
 import { mdiHeart, mdiArrowRightBold } from '@mdi/js';
+import Vuex from "vuex";
+import Vue from "vue";
+
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    isConnected: false,
+    userInfo: {id : -1, username : 'non-connected', description: "non-connected"}
+  },
+  mutations: {
+    /*increment(state) {
+      state.count++;
+    }*/
+  }
+});
 
 export default {
+  store,
   data: () => ({
     heartLogoPath: mdiHeart,
     connectLogoPath: mdiArrowRightBold,
-    isConnected: false,
 
-
-    userId: "",
-    userInfo: {id : -1, username : 'non-connected', description: "non-connected"}
+    userIdFromField: ""
   }),
   computed: {
     connectionPosition: function(){
-      if(!this.isConnected){
+      if(!this.$store.state.isConnected){
         return '0';
       }
       return '270px'
@@ -60,12 +74,12 @@ export default {
   },
   methods: {
     connect: function() {
-      if (this.userId === "GuillaumeOnPenseAToi") { //TODO add production mode
+      if (this.userIdFromField === "GuillaumeOnPenseAToi") { //TODO add production mode
         //Debug mode :)
         this.userInfo = {id : -1, username : 'Debug mode', description: "Toute puissance"};
-        this.isConnected = true;
+        this.$store.state.isConnected = true;
       } else {
-        fetch("http://" + process.env.VUE_APP_API_URL + "/users/" + this.userId)
+        fetch("http://" + process.env.VUE_APP_API_URL + "/users/" + this.userIdFromField)
             .then(response => {
 
               alert("RESPONSE"); //TODO DEBUG ONLY
@@ -85,7 +99,7 @@ export default {
     },
     disconnect: function() {
       this.userInfo = {id : -1, username : 'non-connected', description: "non-connected"};
-      this.isConnected = false;
+      this.$store.state.isConnected = false;
     }
   }
 }
