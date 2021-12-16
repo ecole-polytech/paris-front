@@ -14,13 +14,13 @@
       </div>
       <v-spacer></v-spacer>
       <div class="bar-profile" :style="{left: connectionPosition}">
-        <v-btn icon @click="showConnectionBar = true">
+        <v-btn icon @click="disconnect()">
           <v-avatar>
             <img src="@/assets/default_avatar.jpg">
           </v-avatar>
         </v-btn>
         <v-text-field></v-text-field>
-        <v-btn icon class="color-green" @click="showConnectionBar = false">
+        <v-btn icon class="color-green" @click="connect()">
           <v-icon>{{connectLogoPath}}</v-icon>
         </v-btn>
       </div>
@@ -44,17 +44,25 @@ export default {
   data: () => ({
     heartLogoPath: mdiHeart,
     connectLogoPath: mdiArrowRightBold,
-    showConnectionBar: false,
+    isConnected: false,
 
 
     userId: -1
   }),
   computed: {
     connectionPosition: function(){
-      if(this.showConnectionBar){
+      if(!this.isConnected){
         return '0';
       }
       return '270px'
+    }
+  },
+  methods: {
+    connect: function() {
+      this.isConnected = true;
+    },
+    disconnect: function() {
+      this.isConnected = false;
     }
   }
 }
