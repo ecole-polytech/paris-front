@@ -9,29 +9,18 @@
 </template>
 
 <script>
+
 export default {
   name: "PublicProfile",
   props:{
-    idUser: Number
+    userInfo: Object
   },
   data: function () {
     return {
-      userInfo: {id : -1, username : 'undefined', description: "undefined"}
+
     }
   },
-  mounted() {
-    //setTimeout(
-    //    () => {
-          this.userInfo.id = this.idUser;
-          console.log(this._props.idUser);
-          fetch("http://" + process.env.VUE_APP_API_URL + "/users/" + this.idUser) //TODO this is UNDEFINED
-              .then(response => response.json())
-              .then(data => {
-                this.userInfo.username = data.name;
-                this.userInfo.description = data.description;
-              });
-     //   }
-     //   , 1000);
+  computed: {
   }
 }
 </script>

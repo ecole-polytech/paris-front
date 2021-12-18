@@ -7,9 +7,9 @@
       </v-icon>
       <div id="nav">
         <router-link to="/">Présentation</router-link>
-        <div v-if="this.$store.state.isConnected" style="display: inline"> | <router-link to="/ViewProfiles">Je veux swiiiper</router-link>  </div>
-        <div v-if="this.$store.state.isConnected" style="display: inline"> | <router-link to="/Relations">Aller plus loin</router-link> </div>
-        <div v-if="this.$store.state.isConnected" style="display: inline"> | <router-link to="/MyProfile">Configurer mon profil</router-link> </div>
+        <div v-if="$store.state.auth.isConnected" style="display: inline"> | <router-link to="/ViewProfiles">Je veux swiiiper</router-link>  </div>
+        <div v-if="$store.state.auth.isConnected" style="display: inline"> | <router-link to="/Relations">Aller plus loin</router-link> </div>
+        <div v-if="$store.state.auth.isConnected" style="display: inline"> | <router-link to="/MyProfile">Configurer mon profil</router-link> </div>
         | <router-link to="/about">A propos des développeurs</router-link>
       </div>
       <v-spacer></v-spacer>
@@ -39,25 +39,8 @@
 
 <script>
 import { mdiHeart, mdiArrowRightBold } from '@mdi/js';
-import Vuex from "vuex";
-import Vue from "vue";
-
-Vue.use(Vuex);
-
-const store = new Vuex.Store({
-  state: {
-    isConnected: false,
-    userInfo: {id : -1, username : 'non-connected', description: "non-connected"}
-  },
-  mutations: {
-    /*increment(state) {
-      state.count++;
-    }*/
-  }
-});
 
 export default {
-  store,
   data: () => ({
     heartLogoPath: mdiHeart,
     connectLogoPath: mdiArrowRightBold,
@@ -66,18 +49,20 @@ export default {
   }),
   computed: {
     connectionPosition: function(){
-      if(!this.$store.state.isConnected){
+      if(!this.$store.state.auth.isConnected){
         return '0';
       }
       return '270px'
-    }
+    },
   },
   methods: {
     connect: function() {
       if (this.userIdFromField === "GuillaumeOnPenseAToi") { //TODO add production mode
         //Debug mode :)
-        this.userInfo = {id : -1, username : 'Debug mode', description: "Toute puissance"};
-        this.$store.state.isConnected = true;
+        this.$store.dispatch("auth/login", {id : -1, username : 'Debug mode', description: "Toute puissance"} );
+
+        //this.$store.userInfo.username = "OUII";
+        //this.$store.userName = "Ouioui";
       } else {
         fetch("http://" + process.env.VUE_APP_API_URL + "/users/" + this.userIdFromField)
             .then(response => {
